@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Search, User, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
@@ -18,7 +18,6 @@ export default function Navbar({ onSearchOpen }) {
   const [mobileShopOpen, setMobileShopOpen] = useState(false);
   const dropdownTimeoutRef = useRef(null);
   const location = useLocation();
-  const navigate = useNavigate();
   const { cartCount } = useCart();
 
   useEffect(() => {
@@ -76,7 +75,7 @@ export default function Navbar({ onSearchOpen }) {
 
   return (
     <header className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-      <div className="navbar-container">
+      <div className="navbar-inner">
         <div className="navbar-brand">
           <Link
             to="/"
@@ -214,7 +213,7 @@ export default function Navbar({ onSearchOpen }) {
           >
             <ShoppingBag size={20} />
             {cartCount > 0 && (
-              <span className="cart-badge" aria-hidden="true">
+              <span className="cart-count" aria-hidden="true">
                 {cartCount}
               </span>
             )}
@@ -222,7 +221,7 @@ export default function Navbar({ onSearchOpen }) {
 
           <button
             type="button"
-            className="navbar-action-btn navbar-hamburger"
+            className="navbar-action-btn hamburger"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={mobileMenuOpen}

@@ -1,48 +1,25 @@
-import React from "react";
-import { useParams, Link } from "react-router-dom";
-
-const products = {
-  "sandalwood-logs": {
-    name: "Sandalwood Logs",
-    description: "Discover the natural character of traditional sandalwood.",
-  },
-  "sandalwood-oil": {
-    name: "Sandalwood Oil",
-    description: "Experience the distinctive aroma of sandalwood.",
-  },
-  "rose-water": {
-    name: "Rose Water",
-    description: "A refreshing addition to your daily routine.",
-  },
-  "sandalwood-powder": {
-    name: "Sandalwood Powder",
-    description: "A traditional essential for your rituals.",
-  },
-  agarbatti: {
-    name: "Agarbatti",
-    description: "Bring the familiar fragrance of traditional incense home.",
-  },
-};
+import { useParams, Link } from 'react-router-dom';
+import ProductDetail from '../components/ProductDetail';
+import { getProductBySlug } from '../data/products';
 
 export default function ProductPage() {
-  const { productId } = useParams();
-  const product = products[productId];
+  // The route in App.jsx is "/product/:slug"
+  const { slug } = useParams();
+  const product = getProductBySlug(slug);
 
   if (!product) {
     return (
-      <main>
+      <section className="page-container page-header">
         <h1>Product not found</h1>
-        <Link to="/shop">Return to Shop</Link>
-      </main>
+        <p>We couldn't find the product you're looking for.</p>
+        <Link to="/shop" className="btn btn-primary">Return to Shop</Link>
+      </section>
     );
   }
 
   return (
-    <main className="product-page">
-      <p>DEIA COLLECTION</p>
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
-      <Link to="/shop">← Back to Collection</Link>
+    <main className="product-page container">
+      <ProductDetail key={product.slug} product={product} />
     </main>
   );
 }

@@ -22,6 +22,11 @@ export default function ProductDetail({ product }) {
     );
   }
 
+  return <ProductDetailContent product={product} />;
+}
+
+// Hooks live here so they are never called conditionally.
+function ProductDetailContent({ product }) {
   const { addToCart } = useCart();
 
   const galleryList =
